@@ -14,7 +14,7 @@ ssh into EC2 instance using
 
 copy all the files to the EC2 instance using
 
-'scp -i ~/path/to/key-pair.pem -r ~/path/to/files ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com:~/path/
+'scp -i ~/path/to/key-pair.pem -r ~/path/to/files ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com:~/path/'
 
 ## Daemon
 Install daemontools on EC2.
@@ -43,13 +43,13 @@ exec multilog t ./main'
 
 sudo chmod +x /service/cloud/log/run
 
-#Start the daemon
+-Start the daemon
 sudo svscan /service &
 
-#Monitor the daemon
+-Monitor the daemon
 sudo svstat /service/cloud/
 
-#Monitor the logs
+-Monitor the logs
 sudo tail -f /service/cloud/log/main/current
 
 ## Future
