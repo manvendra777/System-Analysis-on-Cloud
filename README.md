@@ -77,3 +77,11 @@ sudo tail -f /service/app/log/main/current
 ## Future
 Use the Dockerfile to create a docker image for the code.
 Deploy it on a fleet of AWS instances. Write code for a controller that will poll all these instances and send the response to the user.
+
+```
+docker build --tag manvendra777/cloud-docker .
+```
+
+```
+docker run -v /proc:/host_proc:ro -p 5000:5000 --name cloud-docker -d manvendra777/cloud-docker:latest
+```
