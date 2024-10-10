@@ -13,15 +13,14 @@ app = Flask(__name__)
 SECRET_KEY = 'your-very-secret-key'
 JWT_ALGORITHM = 'HS256'
 
-psutil.PROCFS_PATH = '/host_proc'
+# Logger setup
+logging.basicConfig(filename='api_monitor.log', level=logging.INFO)
 
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
     default_limits=["200 per day", "50 per hour"]
 )
-# Logger setup
-logging.basicConfig(filename='api_monitor.log', level=logging.INFO)
 
 def log_activity(action, status):
     logging.info(f"{datetime.now()} - Action: {action} - Status: {status}")
@@ -52,11 +51,11 @@ def get_memory_usage():
     memory = psutil.virtual_memory()
     log_activity('Memory Usage Check', 'Success')
     return jsonify({
-        "total": str(int(psutil.virtual_memory().total/(1024 ** 3))) + " GB",
-        "available": str(int(psutil.virtual_memory().available/(1024 ** 3))) + " GB",
+        "total": str(int(psutil.virtual_memory().total/(1024 ** 2))) + " MB",
+        "available": str(int(psutil.virtual_memory().available/(1024 ** 2))) + " MB",
         "percent": str(psutil.virtual_memory().percent) + " %",
-        "used": str(int(psutil.virtual_memory().used/(1024 ** 3))) + " GB",
-        "free": str(int(psutil.virtual_memory().free/(1024 ** 3))) + " GB"
+        "used": str(int(psutil.virtual_memory().used/(1024 ** 2))) + " MB",
+        "free": str(int(psutil.virtual_memory().free/(1024 ** 2))) + " MB"
     }), 200
 
 @app.route('/disk', methods=['GET'])
@@ -93,4 +92,4 @@ def get_token():
     return jsonify({'token': token})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000
