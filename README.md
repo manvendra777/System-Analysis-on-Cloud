@@ -42,14 +42,13 @@ sudo vim /service/cloud/log/run
 exec multilog t ./main'
 
 sudo chmod +x /service/cloud/log/run
-
-- Start the daemon
+> Start the daemon
 sudo svscan /service &
 
-- Monitor the daemon
+> Monitor the daemon
 sudo svstat /service/cloud/
 
-- Monitor the logs
+> Monitor the logs
 sudo tail -f /service/cloud/log/main/current
 
 ## Future
