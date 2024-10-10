@@ -18,39 +18,49 @@ copy all the files to the EC2 instance using
 
 ## Daemon
 Install daemontools on EC2.
+```
 sudo yum install gcc make -y
 wget http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
 tar -xzvf daemontools-0.76.tar.gz
 cd admin/daemontools-0.76/
-
 echo gcc -O2 -include /usr/include/errno.h > src/conf-cc
 echo 'SV:123456:respawn:/command/svscanboot' >> /etc/inittab
-
+```
 #create directories and set permissions
+```
 sudo init q
 sudo mkdir -p /service/cloud/log
 sudo vim /service/cloud/run
-
+```
+```
 '#!/bin/sh
 exec 2>&1
 exec /usr/bin/python3 /home/ec2-user/cloud.py'
-
+```
+```
 sudo chmod +x /service/cloud/run
 sudo vim /service/cloud/log/run
-
+```
+```
 '#!/bin/sh
 exec multilog t ./main'
-
+```
+```
 sudo chmod +x /service/cloud/log/run
-> Start the daemon
+```
+Start the daemon
+```
 sudo svscan /service &
+```
 
-> Monitor the daemon
+Monitor the daemon
+```
 sudo svstat /service/cloud/
-
-> Monitor the logs
+```
+Monitor the logs
+```
 sudo tail -f /service/cloud/log/main/current
-
+```
 ## Future
 Use the Dockerfile to create a docker image for the code.
 Deploy it on a fleet of AWS instances. Write code for a controller that will poll all these instances and send the response to the user.
