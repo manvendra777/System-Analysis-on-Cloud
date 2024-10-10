@@ -69,7 +69,7 @@ Monitor the logs
 sudo tail -f /service/app/log/main/current
 ```
 
-##Challenges Faced
+## Challenges Faced
 - Initially had issues with accessing the open port for EC2. Even after adding the SG rule, there is some delay. Stopped and rebooted the instance and the access issue was resolved.
 - Majorly faced problems in daemonising the application. Had to restart the entire process several times. Luckily there were number of StackOverflow posts and a couple YouTube videos that helped me resolve these issues. Added the commands as much as I could remember/find in the .bash_history file that I feel were relevant. May be missing a few changes here and there as the number of changes I did was a bit large to keep track of all of them.
 - Initial permission issues while SSH into AWS, Added the chmod command that helped me solve that and SSH into the instance.
