@@ -3,19 +3,20 @@ pip install -r /path/to/requirements.txt
 
 ## Browser settings
 Add the extension 'requestly' to modify the header during the request from browser. Can also use Postman/Curl command and pass the header there.
+Requestly: [https://app.requestly.io/]
 
-Header can be obtained by visiting 'http://ec2-52-53-156-147.us-west-1.compute.amazonaws.com:5000/token'
+Header can be obtained by visiting http://ec2-52-53-156-147.us-west-1.compute.amazonaws.com:5000/token
 
 ## EC2
 Start the EC2 instance and update the security group to allow all access for the port 5000.
 ssh into EC2 instance using
-
-'ssh -i ~/path/to/key-pair.pem -A ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com'
-
-copy all the files to the EC2 instance using
-
-'scp -i \~/path/to/key-pair.pem -r ~/path/to/files ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com:\~/path/'
-
+```
+ssh -i ~/path/to/key-pair.pem -A ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com
+```
+Copy all the files to the EC2 instance using
+```
+scp -i \~/path/to/key-pair.pem -r ~/path/to/files ec2-user@ec2-52-53-156-147.us-west-1.compute.amazonaws.com:\~/path/
+```
 ## Daemon
 Install daemontools on EC2.
 ```
@@ -26,27 +27,27 @@ cd admin/daemontools-0.76/
 echo gcc -O2 -include /usr/include/errno.h > src/conf-cc
 echo 'SV:123456:respawn:/command/svscanboot' >> /etc/inittab
 ```
-#create directories and set permissions
+Create directories and set permissions
 ```
 sudo init q
-sudo mkdir -p /service/cloud/log
-sudo vim /service/cloud/run
+sudo mkdir -p /service/app/log
+sudo vim /service/app/run
 ```
 ```
 '#!/bin/sh
 exec 2>&1
-exec /usr/bin/python3 /home/ec2-user/cloud.py'
+exec /usr/bin/python3 /home/ec2-user/app.py'
 ```
 ```
-sudo chmod +x /service/cloud/run
-sudo vim /service/cloud/log/run
+sudo chmod +x /service/app/run
+sudo vim /service/app/log/run
 ```
 ```
 '#!/bin/sh
 exec multilog t ./main'
 ```
 ```
-sudo chmod +x /service/cloud/log/run
+sudo chmod +x /service/app/log/run
 ```
 Start the daemon
 ```
@@ -55,11 +56,11 @@ sudo svscan /service &
 
 Monitor the daemon
 ```
-sudo svstat /service/cloud/
+sudo svstat /service/app/
 ```
 Monitor the logs
 ```
-sudo tail -f /service/cloud/log/main/current
+sudo tail -f /service/app/log/main/current
 ```
 ## Future
 Use the Dockerfile to create a docker image for the code.
