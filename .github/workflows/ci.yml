@@ -26,7 +26,7 @@ jobs:
         pip install pytest flask pytest-cov
 
     - name: Run tests with coverage
-      run: pytest --cov=app --cov-report=term-missing tests/
+      run: PYTHONPATH=. pytest --cov=app --cov-report=term-missing tests/
 
   docker-build-and-push:
     needs: test-and-build
