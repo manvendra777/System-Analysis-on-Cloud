@@ -32,6 +32,8 @@ def authenticate_request():
         jwt.decode(token.split("Bearer ")[-1], SECRET_KEY, algorithms=[JWT_ALGORITHM])
     except jwt.ExpiredSignatureError:
         abort(401)  # Unauthorized if token expired
+    except jwt.InvalidTokenError:
+        abort(401)  # Unauthorized if token is invalid
 
 @app.route('/cpu', methods=['GET'])
 @limiter.limit("10 per minute")
