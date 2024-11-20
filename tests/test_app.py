@@ -12,6 +12,8 @@ def auth_token(client):
 def test_authorization(client):
     response = client.get('/cpu', headers={'Authorization': 'dummy-header'})
     assert response.status_code == 401
+    response = client.get('/cpu', headers={'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIwOTkzMDd9.CjZbc3VA0_oYRdLuTWnhPtvcAZsVFeJIszvLbRs9-Lw'})
+    assert response.status_code == 401
     response = client.get('/cpu')
     assert response.status_code == 403 # Forbidden if no token
 
