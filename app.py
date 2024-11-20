@@ -9,8 +9,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
-# Security setup: Using JWT for authentication
-SECRET_KEY = 'your-very-secret-key'
+SECRET_KEY = 'create-my-secret-key'
 JWT_ALGORITHM = 'HS256'
 
 # Logger setup
@@ -33,8 +32,6 @@ def authenticate_request():
         jwt.decode(token.split("Bearer ")[-1], SECRET_KEY, algorithms=[JWT_ALGORITHM])
     except jwt.ExpiredSignatureError:
         abort(401)  # Unauthorized if token expired
-    except jwt.InvalidTokenError:
-        abort(401)  # Unauthorized if token is invalid
 
 @app.route('/cpu', methods=['GET'])
 @limiter.limit("10 per minute")
